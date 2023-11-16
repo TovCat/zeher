@@ -1,0 +1,22 @@
+#!/bin/bash
+if [[ $1 == "check" ]]; then
+  echo "Calling this function will erase previous check.txt file! Continue (y/n)?"
+  read reply
+  if [[ $reply == "Y" ]] || [[ $reply == "y" ]] || [[ $reply = "Í" ]] || [[ $reply = "í" ]]; then
+    python check.py
+  fi
+elif [[ $1 == "prepare" ]]; then
+  echo "Be aware that calling this procedure will change every Gaussian .gjf file in current directory which may lead to erroneous inputs for previously processed files"
+  echo "Press Y to continue"
+  read reply
+  if [[ $reply == "Y" ]] || [[ $reply == "y" ]] || [[ $reply = "Í" ]] || [[ $reply = "í" ]]; then
+    python prepare.py
+  fi
+elif [[ $1 == "run" ]]; then
+  for file in ./*.gjf
+  do
+    /ifs/bioifs/apps/g09/bsd/subg09l "$file"
+  done
+else
+  echo "Error! Unknown '$1' command!"
+fi
